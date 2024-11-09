@@ -19,11 +19,12 @@ const StockForm = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://127.0.0.1:5000/api/add_stock', formData);
-            alert(response.data.message);
+            alert(response.data.message);  // Alert on success
         } catch (error) {
             console.error("There was an error adding the stock!", error);
+            alert('Error saving stock data', error);
         }
-    };
+    }; 
 
     return (
         <form onSubmit={handleSubmit}>

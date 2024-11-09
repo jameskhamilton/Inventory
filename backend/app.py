@@ -5,17 +5,18 @@ from models import Stock
 from dotenv import load_dotenv
 import os
 
+app = Flask(__name__)
+
+CORS(app)
+
 # Load .env file
 load_dotenv()
 
-app = Flask(__name__)
-
 # Get MongoDB URI from environment variables
-mongo_uri = os.getenv("MONGO_URI")
+mongo_uri = os.getenv('MONGO_URI')  # Make sure the .env file is correctly set
 
-# Connect to MongoDB using MongoEngine
-app.config['MONGODB_SETTINGS'] = {'host': mongo_uri}
-connect(host=app.config['MONGODB_SETTINGS']['host'])
+# Connect to MongoDB
+connect(host=mongo_uri)
 
 @app.route('/api/add_stock', methods=['POST'])
 def add_stock():

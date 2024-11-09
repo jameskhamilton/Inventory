@@ -1,7 +1,7 @@
 from mongoengine import Document, StringField, IntField, FloatField
 
 class Stock(Document):
-    #meta = {'collection': 'procurement'}
+    meta = {'collection': 'procurement'}
 
     item_name = StringField(required=True)
     supplier = StringField(required=True)
