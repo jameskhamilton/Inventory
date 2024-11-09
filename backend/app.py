@@ -1,21 +1,37 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from mongoengine import connect
+from models import Stock
+from dotenv import load_dotenv
+import os
+
+# Load .env file
+load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
 
-# Sample data
-users = []
+# Get MongoDB URI from environment variables
+mongo_uri = os.getenv("MONGO_URI")
 
-@app.route('/api/users', methods=['GET'])
-def get_users():
-    return jsonify(users)
+# Connect to MongoDB using MongoEngine
+app.config['MONGODB_SETTINGS'] = {'host': mongo_uri}
+connect(host=app.config['MONGODB_SETTINGS']['host'])
 
-@app.route('/api/users', methods=['POST'])
-def add_user():
-    user_data = request.json
-    users.append(user_data)
-    return jsonify(user_data), 201
+@app.route('/api/add_stock', methods=['POST'])
+def add_stock():
+    data = request.json
+    try:
+        # Create a new stock entry based on request data
+        stock = Stock(
+            item_name=data['item_name'],
+            supplier=data['supplier'],
+            quantity=data['quantity'],
+            cost=data['cost']
+        )
+        stock.save()
+        return jsonify({"message": "Stock added successfully!"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 @app.route('/')
 def home():
