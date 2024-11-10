@@ -1,0 +1,59 @@
+{
+    "Dresses": {
+      "group_id": 1,
+      "items": [
+        "Casual Dress",
+        "Party Dress",
+        "Maxi Dress"
+      ]
+    },
+    "Jumpsuits & Playsuits": {
+      "group_id": 2,
+      "items": [
+        "Romper",
+        "Playsuit",
+        "Jumpsuit"
+      ]
+    },
+    "Pyjamas & Nightwear": {
+      "group_id": 3,
+      "items": [
+        "Pajama Set",
+        "Nightgown",
+        "Sleep Shorts"
+      ]
+    },
+    "Sweatshirts & Hoodies": {
+      "group_id": 4,
+      "items": [
+        "Hoodie",
+        "Sweatshirt",
+        "Zip-Up Hoodie"
+      ]
+    },
+    "Coats & Jackets": {
+      "group_id": 5,
+      "items": [
+        "Winter Coat",
+        "Jacket",
+        "Parka"
+      ]
+    },
+    "T-Shirts & Polos": {
+      "group_id": 6,
+      "items": [
+        "T-Shirt",
+        "Polo Shirt",
+        "Vest"
+      ]
+    },
+    "Trousers, Jeans & Shorts": {
+      "group_id": 7,
+      "items": [
+        "Jeans",
+        "Trousers",
+        "Shorts"
+      ]
+    }
+  }
+  

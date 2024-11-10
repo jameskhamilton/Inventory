@@ -70,3 +70,51 @@ input[type="date"] {
 .submit-btn:hover {
     background-color: #9DFD7A;
 }
+
+select {
+    padding: 10px;
+    font-size: 1.1rem;
+    font-family: 'Josefin Slab';
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0; /* Remove default margin */
+}
+
+ul li {
+    display: flex;
+    justify-content: space-between; /* Spread the text and button apart */
+    align-items: center; /* Vertically center the items */
+    margin: 10px 0; /* Space between each list item */
+    font-size: 1.1rem;
+    width: 100%; /* Ensure the list item takes up full width */
+}
+
+ul li span {
+    display: block;  /* Ensure the span takes up the full width */
+    text-align: center; /* Center the text */
+    width: 100%; /* Make the text block take up all available space */
+}
+
+.remove-btn {
+    background-color: #FEACC2;
+    color: black;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Josefin Slab';
+    font-size: 0.9rem;
+}
+
+.remove-btn:hover {
+    background-color: #FD7A9D;
+}
