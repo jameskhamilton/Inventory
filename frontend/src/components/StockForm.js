@@ -104,6 +104,40 @@ const StockForm = () => {
     return (
         <div className="form-container">
             <form onSubmit={handleSubmit}>
+
+            <label htmlFor="supplier">Supplier:</label>
+                <input
+                    type="text"
+                    id="supplier"
+                    name="supplier"
+                    value={formData.supplier}
+                    onChange={handleChange}
+                    required
+                />
+
+                <label htmlFor="cost">Cost:</label>
+                <input
+                    type="number"
+                    id="cost"
+                    name="cost"
+                    value={formData.cost}
+                    onChange={handleChange}
+                    required
+                    step="0.01"
+                />
+
+                <label htmlFor="procurement_date">Procurement Date:</label>
+                <input
+                    type="date"
+                    id="procurement_date"
+                    name="procurement_date"
+                    value={formData.procurement_date}
+                    onChange={handleChange}
+                    required
+                />
+
+                <div className="section-divider"></div>
+
                 <label htmlFor="group">Item Groups:</label>
                 <select
                     id="group"
@@ -146,37 +180,8 @@ const StockForm = () => {
                         </li>
                     ))}
                 </ul>
-
-                <label htmlFor="supplier">Supplier:</label>
-                <input
-                    type="text"
-                    id="supplier"
-                    name="supplier"
-                    value={formData.supplier}
-                    onChange={handleChange}
-                    required
-                />
-
-                <label htmlFor="cost">Cost:</label>
-                <input
-                    type="number"
-                    id="cost"
-                    name="cost"
-                    value={formData.cost}
-                    onChange={handleChange}
-                    required
-                    step="0.01"
-                />
-
-                <label htmlFor="procurement_date">Procurement Date:</label>
-                <input
-                    type="date"
-                    id="procurement_date"
-                    name="procurement_date"
-                    value={formData.procurement_date}
-                    onChange={handleChange}
-                    required
-                />
+                
+                <div className="section-divider"></div>
 
                 <button type="submit" className="submit-btn">Submit All</button>
             </form>

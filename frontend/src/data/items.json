@@ -54,6 +54,16 @@
         "Trousers",
         "Shorts"
       ]
+    },
+    "Shoes": {
+      "group_id": 8,
+      "items": [
+        "Sneakers",
+        "Sandals",
+        "Boots",
+        "Flats",
+        "Loafers"
+      ]
     }
   }
   
