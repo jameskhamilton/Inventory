@@ -7,7 +7,10 @@ import os
 
 app = Flask(__name__)
 
-CORS(app)
+if os.getenv("FLASK_ENV") == "production":
+    CORS(app, origins=["http://localhost:3000/"])
+else:
+    CORS(app)
 
 # Load .env file
 load_dotenv()
@@ -27,7 +30,8 @@ def add_stock():
             item_name=data['item_name'],
             supplier=data['supplier'],
             quantity=data['quantity'],
-            cost=data['cost']
+            cost=data['cost'],
+            procurement_date=data['procurement_date']
         )
         stock.save()
         return jsonify({"message": "Stock added successfully!"}), 201

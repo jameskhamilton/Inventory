@@ -1,13 +1,15 @@
 // frontend/src/components/StockForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import './StockForm.css'; // Import the CSS file for styling
 
 const StockForm = () => {
     const [formData, setFormData] = useState({
         item_name: '',
         supplier: '',
-        quantity: 0,
-        cost: 0.0
+        quantity: '',
+        cost: '',
+        procurement_date: ''
     });
 
     const handleChange = (e) => {
@@ -19,33 +21,71 @@ const StockForm = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://127.0.0.1:5000/api/add_stock', formData);
-            alert(response.data.message);  // Alert on success
+            alert(response.data.message);
         } catch (error) {
-            console.error("There was an error adding the stock!", error);
-            alert('Error saving stock data', error);
+            const errorMessage = error.response ? error.response.data.error : 'Unknown error';
+            console.error("There was an error adding the stock!", errorMessage);
+            alert(`Error: ${errorMessage}`);
         }
-    }; 
+    };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Item Name:
-                <input type="text" name="item_name" value={formData.item_name} onChange={handleChange} required />
-            </label>
-            <label>
-                Supplier:
-                <input type="text" name="supplier" value={formData.supplier} onChange={handleChange} required />
-            </label>
-            <label>
-                Quantity:
-                <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} required />
-            </label>
-            <label>
-                Cost:
-                <input type="number" name="cost" value={formData.cost} onChange={handleChange} required />
-            </label>
-            <button type="submit">Add Stock</button>
-        </form>
+        <div className="form-container">
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="item_name">Item Name:</label>
+                <input
+                    type="text"
+                    id="item_name"
+                    name="item_name"
+                    value={formData.item_name}
+                    onChange={handleChange}
+                    required
+                />
+
+                <label htmlFor="supplier">Supplier:</label>
+                <input
+                    type="text"
+                    id="supplier"
+                    name="supplier"
+                    value={formData.supplier}
+                    onChange={handleChange}
+                    required
+                />
+
+                <label htmlFor="quantity">Quantity:</label>
+                <input
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                    value={formData.quantity}
+                    onChange={handleChange}
+                    required
+                />
+
+                <label htmlFor="cost">Cost:</label>
+                <input
+                    type="number"
+                    id="cost"
+                    name="cost"
+                    value={formData.cost}
+                    onChange={handleChange}
+                    required
+                    step="0.01"
+                />
+
+                <label htmlFor="procurement_date">Procurement Date:</label>
+                <input
+                    type="date"
+                    id="procurement_date"
+                    name="procurement_date"
+                    value={formData.procurement_date}
+                    onChange={handleChange}
+                    required
+                />                
+
+                <button type="submit" className="submit-btn">Add Stock</button>
+            </form>
+        </div>
     );
 };
 
