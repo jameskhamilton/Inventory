@@ -25,13 +25,12 @@ connect(host=mongo_uri)
 def add_stock():
     data = request.json
     try:
-        # Create a new stock entry based on request data
+        # Create one record with multiple items
         stock = Stock(
-            item_name=data['item_name'],
             supplier=data['supplier'],
-            quantity=data['quantity'],
             cost=data['cost'],
-            procurement_date=data['procurement_date']
+            procurement_date=data['procurement_date'],
+            items=data['items']  # Store the list of items directly in the record
         )
         stock.save()
         return jsonify({"message": "Stock added successfully!"}), 201
