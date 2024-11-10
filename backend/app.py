@@ -7,7 +7,10 @@ import os
 
 app = Flask(__name__)
 
-CORS(app)
+if os.getenv("FLASK_ENV") == "production":
+    CORS(app, origins=["http://localhost:3000/"])
+else:
+    CORS(app)
 
 # Load .env file
 load_dotenv()
