@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './StockForm.css'; // Import the CSS file for styling
+import './StockForm.css';
+import itemsData from '../data/items.json';  // Import the JSON file
 
 const StockForm = () => {
-    const availableItems = ["T-shirt", "Trousers", "Top"]; // List of all items
+    // List of all item categories with group ID
+    const availableGroups = Object.keys(itemsData).sort((a, b) => a.localeCompare(b));
+
     const [formData, setFormData] = useState({
         supplier: '',
         cost: '',
         procurement_date: '',
-        items: [] // Store the added items with their quantities
+        items: []
     });
 
     const [newItem, setNewItem] = useState({
-        item_name: '',
-        quantity: ''
+        group: '',   // Store the selected group
+        group_id: '', // Store the associated group ID
+        quantity: '' // Store the quantity for the selected group
     });
 
     const handleChange = (e) => {
@@ -26,22 +30,40 @@ const StockForm = () => {
         setNewItem({ ...newItem, [name]: value });
     };
 
+    const handleGroupChange = (e) => {
+        const { value } = e.target;
+        // Get the group ID from the selected group
+        const group_id = itemsData[value]?.group_id || '';
+        setNewItem({ ...newItem, group: value, group_id });
+    };
+
     const handleAddItem = () => {
-        // Ensure item_name and quantity are provided before adding
-        if (newItem.item_name && newItem.quantity > 0) {
+        if (newItem.group && newItem.quantity > 0 && newItem.quantity < 10000) {
+            // Add the new item with group name, ID, and quantity to the formData
+            const updatedItems = [...formData.items, {
+                group_name: newItem.group,
+                group_id: newItem.group_id, // Save the group ID
+                quantity: newItem.quantity  // Save the quantity
+            }];
+            updatedItems.sort((a, b) => a.group_name.localeCompare(b.group_name));
+
+            // Update formData
             setFormData(prevData => ({
                 ...prevData,
-                items: [...prevData.items, newItem] // Add the new item to the list of items
+                items: updatedItems
             }));
-            setNewItem({ item_name: '', quantity: '' }); // Reset the input fields for next item
+
+            // Reset the newItem state
+            setNewItem({ group: '', group_id: '', quantity: '' });
+        } else if (newItem.quantity >= 10000) {
+            alert('Please enter a valid quantity less than 10,000.');
         } else {
-            alert('Please select an item and enter a valid quantity.');
+            alert('Please select a valid group and enter a valid quantity.');
         }
     };
 
-    // Handle item removal
     const handleRemoveItem = (index) => {
-        const updatedItems = formData.items.filter((_, i) => i !== index); // Remove item by index
+        const updatedItems = formData.items.filter((_, i) => i !== index);
         setFormData(prevData => ({
             ...prevData,
             items: updatedItems
@@ -54,12 +76,19 @@ const StockForm = () => {
             supplier: formData.supplier,
             cost: formData.cost,
             procurement_date: formData.procurement_date,
-            items: formData.items // Send the grouped items here
+            items: formData.items
         };
-        
+
         try {
             const response = await axios.post('http://127.0.0.1:5000/api/add_stock', payload);
-            alert(response.data.message);  // Alert on success
+            alert(response.data.message);
+            setFormData({
+                supplier: '',
+                cost: '',
+                procurement_date: '',
+                items: []
+            });
+            setNewItem({ group: '', group_id: '', quantity: '' });
         } catch (error) {
             const errorMessage = error.response ? error.response.data.error : 'Unknown error';
             console.error("There was an error adding the stock!", errorMessage);
@@ -67,24 +96,24 @@ const StockForm = () => {
         }
     };
 
-    // Filter available items to exclude those already added
-    const filteredItems = availableItems.filter(
-        item => !formData.items.some(addedItem => addedItem.item_name === item)
+    // Filter out groups that have already been added to the list
+    const filteredGroups = availableGroups.filter(group => 
+        !formData.items.some(item => item.group_name === group)
     );
 
     return (
         <div className="form-container">
             <form onSubmit={handleSubmit}>
-                <label htmlFor="item_name">Item Name:</label>
+                <label htmlFor="group">Item Groups:</label>
                 <select
-                    id="item_name"
-                    name="item_name"
-                    value={newItem.item_name}
-                    onChange={handleItemChange}
+                    id="group"
+                    name="group"
+                    value={newItem.group}
+                    onChange={handleGroupChange}
                 >
-                    <option value="">Select an Item</option>
-                    {filteredItems.map((item, index) => (
-                        <option key={index} value={item}>{item}</option>
+                    <option value="">Select Items</option>
+                    {filteredGroups.map((group, index) => (
+                        <option key={index} value={group}>{group}</option>
                     ))}
                 </select>
 
@@ -99,14 +128,14 @@ const StockForm = () => {
                 />
 
                 <button type="button" className="submit-btn" onClick={handleAddItem}>
-                    Add Item
+                    Add Items
                 </button>
 
-                <h3>Items Added:</h3>
+                <h3>Selected Items:</h3>
                 <ul>
                     {formData.items.map((item, index) => (
                         <li key={index}>
-                            <span className="item-text">{item.item_name} - {item.quantity}</span>
+                            <span className="item-text">{item.group_name} - {item.quantity}</span>
                             <button
                                 type="button"
                                 onClick={() => handleRemoveItem(index)}
