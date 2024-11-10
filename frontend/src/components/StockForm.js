@@ -1,6 +1,7 @@
 // frontend/src/components/StockForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import './StockForm.css'; // Import the CSS file for styling
 
 const StockForm = () => {
     const [formData, setFormData] = useState({
@@ -22,30 +23,57 @@ const StockForm = () => {
             alert(response.data.message);  // Alert on success
         } catch (error) {
             console.error("There was an error adding the stock!", error);
-            alert('Error saving stock data', error);
+            alert('Error saving stock data');
         }
-    }; 
+    };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Item Name:
-                <input type="text" name="item_name" value={formData.item_name} onChange={handleChange} required />
-            </label>
-            <label>
-                Supplier:
-                <input type="text" name="supplier" value={formData.supplier} onChange={handleChange} required />
-            </label>
-            <label>
-                Quantity:
-                <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} required />
-            </label>
-            <label>
-                Cost:
-                <input type="number" name="cost" value={formData.cost} onChange={handleChange} required />
-            </label>
-            <button type="submit">Add Stock</button>
-        </form>
+        <div className="form-container">
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="item_name">Item Name:</label>
+                <input
+                    type="text"
+                    id="item_name"
+                    name="item_name"
+                    value={formData.item_name}
+                    onChange={handleChange}
+                    required
+                />
+
+                <label htmlFor="supplier">Supplier:</label>
+                <input
+                    type="text"
+                    id="supplier"
+                    name="supplier"
+                    value={formData.supplier}
+                    onChange={handleChange}
+                    required
+                />
+
+                <label htmlFor="quantity">Quantity:</label>
+                <input
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                    value={formData.quantity}
+                    onChange={handleChange}
+                    required
+                />
+
+                <label htmlFor="cost">Cost:</label>
+                <input
+                    type="number"
+                    id="cost"
+                    name="cost"
+                    value={formData.cost}
+                    onChange={handleChange}
+                    required
+                    step="0.01"
+                />
+
+                <button type="submit" className="submit-btn">Add Stock</button>
+            </form>
+        </div>
     );
 };
 
