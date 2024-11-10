@@ -80,6 +80,7 @@ select {
     width: 100%;
     box-sizing: border-box;
     margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 ul {

@@ -106,7 +106,7 @@ const StockForm = () => {
                 <ul>
                     {formData.items.map((item, index) => (
                         <li key={index}>
-                            <span className="item-text">- {item.item_name} - Quantity: {item.quantity}</span>
+                            <span className="item-text">{item.item_name} - {item.quantity}</span>
                             <button
                                 type="button"
                                 onClick={() => handleRemoveItem(index)}
@@ -118,7 +118,6 @@ const StockForm = () => {
                     ))}
                 </ul>
 
-                {/* Existing fields */}
                 <label htmlFor="supplier">Supplier:</label>
                 <input
                     type="text"
