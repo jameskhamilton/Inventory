@@ -7,8 +7,9 @@ const StockForm = () => {
     const [formData, setFormData] = useState({
         item_name: '',
         supplier: '',
-        quantity: 0,
-        cost: 0.0
+        quantity: '',
+        cost: '',
+        procurement_date: ''
     });
 
     const handleChange = (e) => {
@@ -20,10 +21,11 @@ const StockForm = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://127.0.0.1:5000/api/add_stock', formData);
-            alert(response.data.message);  // Alert on success
+            alert(response.data.message);
         } catch (error) {
-            console.error("There was an error adding the stock!", error);
-            alert('Error saving stock data');
+            const errorMessage = error.response ? error.response.data.error : 'Unknown error';
+            console.error("There was an error adding the stock!", errorMessage);
+            alert(`Error: ${errorMessage}`);
         }
     };
 
@@ -70,6 +72,16 @@ const StockForm = () => {
                     required
                     step="0.01"
                 />
+
+                <label htmlFor="procurement_date">Procurement Date:</label>
+                <input
+                    type="date"
+                    id="procurement_date"
+                    name="procurement_date"
+                    value={formData.procurement_date}
+                    onChange={handleChange}
+                    required
+                />                
 
                 <button type="submit" className="submit-btn">Add Stock</button>
             </form>

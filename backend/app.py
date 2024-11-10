@@ -30,7 +30,8 @@ def add_stock():
             item_name=data['item_name'],
             supplier=data['supplier'],
             quantity=data['quantity'],
-            cost=data['cost']
+            cost=data['cost'],
+            procurement_date=data['procurement_date']
         )
         stock.save()
         return jsonify({"message": "Stock added successfully!"}), 201

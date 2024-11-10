@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, IntField, FloatField
+from mongoengine import Document, StringField, IntField, FloatField, DateField
 
 class Stock(Document):
     meta = {'collection': 'procurement'}
@@ -7,3 +7,4 @@ class Stock(Document):
     supplier = StringField(required=True)
     quantity = IntField(required=True)
     cost = FloatField(required=True)
+    procurement_date = DateField(required=True)
