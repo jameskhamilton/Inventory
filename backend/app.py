@@ -4,6 +4,7 @@ from mongoengine import connect
 from models import Stock
 from dotenv import load_dotenv
 import os
+from datetime import datetime, timezone
 
 app = Flask(__name__)
 
@@ -25,12 +26,14 @@ connect(host=mongo_uri)
 def add_stock():
     data = request.json
     try:
+        current_datetime = datetime.now(timezone.utc)
         # Create one record with multiple items
         stock = Stock(
             supplier=data['supplier'],
             cost=data['cost'],
             procurement_date=data['procurement_date'],
-            items=data['items']  # Store the list of items directly in the record
+            items=data['items'],  # Store the list of items directly in the record
+            created_at=current_datetime
         )
         stock.save()
         return jsonify({"message": "Stock added successfully!"}), 201
