@@ -118,3 +118,8 @@ ul li span {
 .remove-btn:hover {
     background-color: #FD7A9D;
 }
+
+.section-divider {
+    margin: 20px 0;  /* Space around the line */
+    border-top: 1px solid #ddd;  /* Light gray line */
+}
